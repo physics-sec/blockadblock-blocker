@@ -15,3 +15,14 @@ If that happens, open an Issue!
 You can edit in which sites this script excecutes with the `// @match        *://*/*` part of the script.  
 `https://somesite.com/*` will only work on that site
 
+### How does it work?
+The creators of the blockadblocker heavily obfuscated how their script works to make it harder to understand and bypass.  
+When it loads, it does so in a script tag at the bottom of the page, usually you can see the following text at the beginning of the script:  
+`// Place this code snippet near the footer of your page before the close of the /body tag`
+
+The fist thing the script does, is call `eval` to deobfuscate the JavaScript code.  
+The **blockadblock-blocker.js** creates a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) in the `eval` function and looks for certain key-words.  
+If any of these keywords are found, then it decides that it is the blockadblocker trying to deobfuscate their script and returns undefined.  
+If it does not find any of these keywords, then just calls the original eval and returns the result.
+
+
